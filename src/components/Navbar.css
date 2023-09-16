@@ -101,9 +101,8 @@
 @media screen and (max-width: 1000px) {
 	.nav-menu {
 		display: flex;
-		flex-direction: row;
+		flex-direction: column;
 		width: 100%;
-		border-top: 1pxsolid #fff;
 		position: absolute;
 		top: 110px;
 		left: -110%;
@@ -123,8 +122,8 @@
 		z-index: 1;
 	}
 	.nav-item .active {
-		color: #7b80da;
-		border: none;
+		color: #da7bbe;
+		border: 2px solid #a167de;
 	}
 	.nav-item:hover:after {
 		width: 100%;
