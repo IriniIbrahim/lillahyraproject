@@ -1,0 +1,95 @@
+/* Base styles for larger screens */
+.SubscribeOutWrapper {
+	background: linear-gradient(
+		to bottom,
+		#dec5ff 50%,
+		#3f3d52 50%
+	);
+	color: #fff;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 5rem;
+}
+
+.SubscribeInWrapper {
+	background-color: #df6ba8;
+	display: block;
+	align-items: center;
+	justify-content: center;
+	padding: 5rem;
+	border-radius: 30px;
+}
+
+.input-container {
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.input-container input[type="text"] {
+	padding-right: 300px;
+	height: 5rem;
+	display: flex;
+	align-items: center;
+}
+
+.input-container input[type="submit"] {
+	position: absolute;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	border-radius: 5px;
+	background: #ffeb52;
+	font-size: 12px;
+	border: none;
+	padding: 20px;
+	margin: 10px;
+	font-weight: bold;
+}
+/* .OrnamentposSubscribe1 {
+	position: relative;
+	top: -130px;
+	left: 300px;
+}
+.OrnamentposSubscribe2 {
+	position: relative;
+	top: 140px;
+	left: 2000px;
+}
+.OrnamentposSubscribe3 {
+	position: relative;
+	top: 40px;
+	left: 0px;
+} */
+
+@media (max-width: 768px) {
+	.SubscribeOutWrapper {
+		padding: 1rem;
+	}
+
+	.SubscribeInWrapper {
+		padding: 1rem;
+		border-radius: 15px;
+		display: flex;
+		flex-direction: column;
+	}
+	.input-container {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.input-container input[type="text"] {
+		padding-right: 150px;
+		height: 4rem;
+		font-size: 13px;
+	}
+
+	.input-container
+		input[type="submit"] {
+		font-size: 13 px;
+		padding: 10px;
+	}
+}

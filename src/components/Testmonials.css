@@ -1,0 +1,122 @@
+.TestmonialWrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 110vh;
+	background: linear-gradient(
+		180deg,
+		#ffd1f1 0%,
+		#ffeaf8 50%,
+		#ffd1f1 100%
+	);
+}
+
+.CarouselTest {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 50%;
+	text-align: center;
+	color: #fff;
+	border-radius: 5px;
+	filter: drop-shadow(
+		6px 6px 6px rgba(0, 0, 0, 0.418)
+	);
+}
+
+.Tcard {
+	min-width: 200px;
+	height: 440px;
+	border-radius: 12px;
+	background: linear-gradient(
+		180deg,
+		#f86b9e 0%,
+		#cd91e9 100%
+	);
+	box-shadow: 0px 0px 20px 0px
+		rgba(0, 0, 0, 0.07);
+	margin: 3rem;
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	padding: 20px;
+	background: linear-gradient(
+		180deg,
+		#f86b9e 0%,
+		#cd91e9 100%
+	);
+	box-shadow: 0px 0px 20px 0px
+		rgba(0, 0, 0, 0.07);
+	border-radius: 12px;
+}
+
+.Ornamentpos1 {
+	position: absolute;
+	top: -30px;
+	left: -500px;
+	width: 136px;
+	height: 55px;
+}
+.Ornamentpos2 {
+	position: absolute;
+	top: 390px;
+	left: 80px;
+	width: 136px;
+	height: 55px;
+}
+
+.CardPhoto {
+	width: 100%;
+	max-width: 200px;
+	height: auto;
+	margin-bottom: 20px;
+}
+
+.CardText {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: flex-start;
+	color: #fff;
+	font-size: 16px;
+}
+.Tcard .CardDescription {
+	text-align: left;
+}
+.CardName {
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+
+@media (max-width: 900px) {
+	.Tcard {
+		height: 480px;
+	}
+
+	.CardPhoto {
+		max-width: 60%;
+	}
+	.CarouselTest {
+		width: 80%;
+	}
+	.Tcard {
+		flex-direction: column;
+	}
+	.Ornamentpos1 {
+		position: absolute;
+		top: -20px;
+		left: -500px;
+		width: 80px;
+		height: 30px;
+	}
+	.Ornamentpos2 {
+		position: absolute;
+		top: 465px;
+		left: -300px;
+		width: 80px;
+		height: 30px;
+	}
+}
