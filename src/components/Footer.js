@@ -19,11 +19,11 @@ function Footer() {
 					</div>
 					<div className="links-column">
 						<h2>Resources</h2>
-						<a>API</a>
-						<a>Visibility</a>
-						<a>Accessibility</a>
-						<a>Community</a>
-						<a>Marketplace</a>
+						<p>API</p>
+						<p>Visibility</p>
+						<p>Accessibility</p>
+						<p>Community</p>
+						<p>Marketplace</p>
 					</div>
 					<div className="links-column socials-column">
 						<h2>Social Media</h2>
@@ -32,9 +32,9 @@ function Footer() {
 							progress.
 						</p>
 						<div className="socials">
-							<a><FontAwesomeIcon icon={faSquareFacebook} flip className="fb" /></a>
-							<a><FontAwesomeIcon icon={faInstagram} flip className="ins" /></a>
-							<a><FontAwesomeIcon icon={faLinkedin} flip className="linkd" /></a>
+							<a href="/" ><FontAwesomeIcon icon={faSquareFacebook} flip className="fb" /></a>
+							<a href="/" ><FontAwesomeIcon icon={faInstagram} flip className="ins" /></a>
+							<a href="/" ><FontAwesomeIcon icon={faLinkedin} flip className="linkd" /></a>
 						</div>
 					</div>
 					<div className="links-column">
@@ -45,9 +45,9 @@ function Footer() {
 			<footer className="bottom">
 				<p className="copyright">© 2023 All rights reserved</p>
 				<div className="legal">
-					<a> License </a>
-					<a> Terms </a>
-					<a> Privacy </a>
+					<p> License </p>
+					<p> Terms </p>
+					<p> Privacy </p>
 				</div>
 			</footer>
 		</section>

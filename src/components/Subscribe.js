@@ -1,6 +1,5 @@
 import React from 'react';
 import "./Subscribe.css";
-import Ornament from "../assets/Ornament.svg"
 function Subscribe() {
 	return (
 		<>
