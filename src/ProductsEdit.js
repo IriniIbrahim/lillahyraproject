@@ -3,7 +3,7 @@ import { db } from "./config/firebase"
 import { getDocs, collection } from 'firebase/firestore'
 import './Products.css'; // Import your CSS file
 
-function Products() {
+function ProductsEdit() {
 	const [productList, setProductList] = useState([]);
 	const [CategoriesList, setcategoriesList] = useState([]);
 	const [StatusList, setstatusList] = useState([]);
@@ -62,4 +62,4 @@ function Products() {
 	);
 }
 
-export default Products;
+export default ProductsEdit;

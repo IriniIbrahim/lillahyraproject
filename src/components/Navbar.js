@@ -2,7 +2,6 @@ import logo from "../assets/Logo.svg";
 import React, { useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { BurgerClose } from "react-burger-icons";
-
 import './Navbar.css';
 
 function Navbar() {
@@ -26,11 +25,11 @@ function Navbar() {
 						<li className="nav-item">
 							<NavLink
 
-								to="/about"
+								to="/products"
 								className="nav-links"
 								onClick={handleClick}
 							>
-								About
+								Products
 							</NavLink>
 						</li>
 						<li className="nav-item">
@@ -51,6 +50,16 @@ function Navbar() {
 								onClick={handleClick}
 							>
 								Contact Us
+							</NavLink>
+						</li>
+						<li className="nav-item">
+							<NavLink
+
+								to="/login"
+								className="nav-links"
+								onClick={handleClick}
+							>
+								login
 							</NavLink>
 						</li>
 					</ul>
