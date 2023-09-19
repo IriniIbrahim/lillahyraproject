@@ -5,6 +5,7 @@ import "./Profile.css";
 import hi from "./assets/profile.png"
 import leo from "./assets/Leo.svg"
 import ReactLoading from 'react-loading';
+import { Link } from 'react-router-dom';
 
 function Profile() {
 	const [user, setUser] = useState(null);
@@ -74,12 +75,16 @@ function Profile() {
 							</div>
 						</>
 					) : (
-						<ReactLoading
-							type="spinningBubbles" // Use it as a string
-							color="#DF6BA8"
-							height={'50%'}
-							width={'50%'}
-						/>
+
+						<div className="loadingwrapper">
+							<ReactLoading
+								type="spinningBubbles" // Use it as a string
+								color="#DF6BA8"
+								height={'15%'}
+								width={'15%'}
+							/>
+							<Link to="/login" className="lognbtnfromprofile">Login First</Link>
+						</div>
 					)}
 				</div>
 			</div>

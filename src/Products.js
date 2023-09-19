@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { auth, db } from './config/firebase';
+import { useNavigate } from 'react-router-dom';
 import { getDocs, collection, query, where } from 'firebase/firestore';
 import './Products.css'; // Import your CSS file
 import { MagnifyingGlass } from "phosphor-react";
@@ -12,6 +13,8 @@ import AllProductsImage from "./assets/rubber-duck.gif";
 import emailjs from 'emailjs-com';
 
 function Products() {
+	const navigate = useNavigate();
+
 	const [productList, setProductList] = useState([]);
 	const [categoriesList, setCategoriesList] = useState([]);
 	const [statusList, setStatusList] = useState([]);
@@ -32,19 +35,24 @@ function Products() {
 		"Carseat": CarSeatImage,
 		"Bouncers": BouncerImage,
 	};
-
 	const sendEmailToSeller = (product) => {
+		// Check if the user is logged in before sending the email
+		if (!auth.currentUser) {
+			alert('Please log in to send an email to the seller.');
+			return; // Exit the function if the user is not logged in
+		}
+
 		const emailParams = {
 			to_email: userEmails[product.id],
-			from_name: auth?.currentUser?.email,
+			from_name: auth.currentUser.email,
 			subject: `Inquiry about ${product.ProductName}`,
 			message: `I am interested in your product ${product.ProductName}. 
-        Here are the details:
-        - Product Name: ${product.ProductName}
-        - Price per day: ${product.PricePerDay} Kr
-        - Category: ${categoryMapping[product.CategoryID]}
-        - Status: ${statusList.find((status) => status.id === product.StatusID)?.StatusName || 'Unknown'}
-        Please provide me with more details.`,
+            Here are the details:
+            - Product Name: ${product.ProductName}
+            - Price per day: ${product.PricePerDay} Kr
+            - Category: ${categoryMapping[product.CategoryID]}
+            - Status: ${statusList.find((status) => status.id === product.StatusID)?.StatusName || 'Unknown'}
+            Please provide me with more details.`,
 		};
 		emailjs.send(
 			'service_k0kvpac',
@@ -184,7 +192,12 @@ function Products() {
 									{status && <p>Status: {status.StatusName}</p>}
 									<p>Seller Email: {userEmails[product.id]}</p>
 								</div>
-								<button className='sendEmailbtn' onClick={() => sendEmailToSeller(product)}>Send Email to Seller</button>
+								{/* Render the "Send Email" button conditionally */}
+								{auth.currentUser ? (
+									<button className='sendEmailbtn' onClick={() => sendEmailToSeller(product)}>Send Email to Seller</button>
+								) : (
+									<button className='sendEmailbtn' onClick={() => navigate('/login')} >Login to send email to seller</button>
+								)}
 							</div>
 						);
 					})}

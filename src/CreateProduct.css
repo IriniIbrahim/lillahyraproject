@@ -68,7 +68,36 @@ textarea::placeholder {
 	bottom: -140px;
 	right: 150px;
 }
-
+.logintopost {
+	height: 50px;
+	background-image: linear-gradient(
+		144deg,
+		#dab1f8,
+		#bcb3f6 50%,
+		#abf6fb
+	);
+	color: #df6ba8;
+	font-weight: 600;
+	border: 1px solid #df6ba8;
+	border-radius: 20px;
+	cursor: pointer;
+	font-size: 15px;
+	padding: 10px;
+}
+.logintopost:hover,
+.createbtn:hover {
+	background-image: linear-gradient(
+		144deg,
+		#abf6fb,
+		#bcb3f6 50%,
+		#dab1f8
+	);
+}
+.logintocreatwrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
 input[type="file"]::file-selector-button {
 	height: 50px;
 	background-image: linear-gradient(

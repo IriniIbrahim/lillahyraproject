@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import "./CreateProduct.css"
 import baby from "./assets/Sleeping baby-cuate.svg"
+
 function CreateProduct() {
 	const navigate = useNavigate();
 
@@ -19,11 +20,14 @@ function CreateProduct() {
 		category: '',
 	});
 
+	const [userLoggedIn, setUserLoggedIn] = useState(false);
+
 	const productsCollectionRef = collection(db, 'Products');
 	const categoriesCollectionRef = collection(db, 'Categories');
 	const statusCollectionRef = collection(db, 'Status');
 
 	useEffect(() => {
+
 		const fetchCategories = async () => {
 			try {
 				const Categoriesdata = await getDocs(categoriesCollectionRef);
@@ -52,6 +56,10 @@ function CreateProduct() {
 
 		fetchCategories();
 		fetchStatus();
+
+		auth.onAuthStateChanged((user) => {
+			setUserLoggedIn(!!user);
+		});
 	}, []);
 
 	const handleInputChange = (e) => {
@@ -85,6 +93,11 @@ function CreateProduct() {
 		}
 		setValidationError(null);
 
+		// if (!userLoggedIn) {
+		// 	alert('Please log in to post a new product.');
+		// 	return;
+		// }
+
 		try {
 			const imageRef = ref(storage, `projectFiles/${imgURL.name}`);
 			const imageSnapshot = await uploadBytes(imageRef, imgURL);
@@ -92,7 +105,7 @@ function CreateProduct() {
 			const productData = {
 				ProductName: name,
 				PricePerDay: pricePerDay,
-				userId: auth?.currentUser?.uid,
+				userId: auth.currentUser.uid,
 				StatusID: status,
 				CategoryID: category,
 				ImgURL: downloadURL,
@@ -110,56 +123,63 @@ function CreateProduct() {
 		<>
 			<div className='CreateProductWrapper'>
 				<div className='Form'>
-					<img src={baby} className='baby' alt="baby" />
-					<h2 style={{
-						color: "#d0aef3", fontWeight: "700", paddingBottom: "20px"
-					}}>Create Product</h2>
-					<input
-						type="text"
-						name="name"
-						placeholder="Product Name..."
-						value={newProduct.name}
-						onChange={handleInputChange} className='createproductinput'
-					/>
-					<input type="file" onChange={handleImageUpload} className='createproductinput' />
-					<input
-						type="number"
-						name="pricePerDay"
-						placeholder="Price per day..."
-						value={newProduct.pricePerDay}
-						onChange={handleInputChange} className='createproductinput'
-					/>
+					{userLoggedIn ? (
+						<>
+							<img src={baby} className='baby' alt="baby" />
+							<h2 style={{
+								color: "#d0aef3", fontWeight: "700", paddingBottom: "20px"
+							}}>Create Product</h2>
+							<input
+								type="text"
+								name="name"
+								placeholder="Product Name..."
+								value={newProduct.name}
+								onChange={handleInputChange} className='createproductinput'
+							/>
+							<input type="file" onChange={handleImageUpload} className='createproductinput' />
+							<input
+								type="number"
+								name="pricePerDay"
+								placeholder="Price per day..."
+								value={newProduct.pricePerDay}
+								onChange={handleInputChange} className='createproductinput'
+							/>
 
-					<select
-						name="status"
-						onChange={handleInputChange}
-						value={newProduct.status}
-					>
-						<option value="">Select Status</option>
-						{statusList.map((status) => (
-							<option key={status.id} value={status.id}>
-								{status.StatusName}
-							</option>
-						))}
-					</select>
+							<select
+								name="status"
+								onChange={handleInputChange}
+								value={newProduct.status}
+							>
+								<option value="">Select Status</option>
+								{statusList.map((status) => (
+									<option key={status.id} value={status.id}>
+										{status.StatusName}
+									</option>
+								))}
+							</select>
 
-					<select
-						name="category"
-						onChange={handleInputChange}
-						value={newProduct.category}
-					>
-						<option value="">Select Category</option>
-						{categoriesList.map((category) => (
-							<option key={category.id} value={category.id} className='Optionstyle'>
-								{category.CategoryName}
-							</option>
-						))}
-					</select>
+							<select
+								name="category"
+								onChange={handleInputChange}
+								value={newProduct.category}
+							>
+								<option value="">Select Category</option>
+								{categoriesList.map((category) => (
+									<option key={category.id} value={category.id} className='Optionstyle'>
+										{category.CategoryName}
+									</option>
+								))}
+							</select>
 
-					<button onClick={onSubmitProduct} className='createbtn'>Post</button>
+							<button onClick={onSubmitProduct} className='createbtn'>Post</button>
 
-					{validationError && <p style={{ color: "#B71C1C", fontWeight: "700", fontSize: "18px" }}>{validationError}</p>}
-
+							{validationError && <p style={{ color: "#B71C1C", fontWeight: "700", fontSize: "18px" }}>{validationError}</p>}
+						</>
+					) : (
+						<div className='logintocreatewrapper'>
+							<button onClick={() => navigate('/login')} className='logintopost'>Login to Post</button>
+						</div>
+					)}
 				</div>
 			</div>
 		</>
