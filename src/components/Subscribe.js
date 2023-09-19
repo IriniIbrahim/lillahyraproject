@@ -12,9 +12,9 @@ function Subscribe() {
 
 					<form>
 						<label>
-							<div class="input-container">
-								<input type="text" placeholder="Your email..." />
-								<input type="submit" value="subcribe to the newsletter" />
+							<div class="Subscribecontainer">
+								<input type="text" placeholder="Your email..." className='subscribetext' />
+								<input type="submit" value="subcribe to the newsletter" className='subscibebtn' />
 							</div>
 						</label>
 					</form>

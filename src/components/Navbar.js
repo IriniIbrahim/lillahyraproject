@@ -35,11 +35,11 @@ function Navbar() {
 						<li className="nav-item">
 							<NavLink
 
-								to="/blog"
+								to="/profile"
 								className="nav-links"
 								onClick={handleClick}
 							>
-								Blog
+								Profile
 							</NavLink>
 						</li>
 						<li className="nav-item">

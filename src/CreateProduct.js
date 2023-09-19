@@ -1,18 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import { db, auth } from './config/firebase';
+import { db, auth, storage } from './config/firebase';
 import { addDoc, collection, getDocs } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
-
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import "./CreateProduct.css"
+import baby from "./assets/Sleeping baby-cuate.svg"
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 function CreateProduct() {
 	const navigate = useNavigate();
 
 	const [categoriesList, setCategoriesList] = useState([]);
 	const [statusList, setStatusList] = useState([]);
 	const [validationError, setValidationError] = useState(null);
+	const [newProduct, setNewProduct] = useState({
+		name: '',
+		imgURL: null,
+		pricePerDay: 0,
+		status: '',
+		category: '',
+	});
 
-	const productsCollectionRef = collection(db, "Products");
-	const categoriesCollectionRef = collection(db, "Categories");
-	const statusCollectionRef = collection(db, "Status");
+	const productsCollectionRef = collection(db, 'Products');
+	const categoriesCollectionRef = collection(db, 'Categories');
+	const statusCollectionRef = collection(db, 'Status');
 
 	useEffect(() => {
 		const fetchCategories = async () => {
@@ -45,37 +56,52 @@ function CreateProduct() {
 		fetchStatus();
 	}, []);
 
-	const [newProductName, setNewProductName] = useState("");
-	const [newImgURL, setNewImgURL] = useState("");
-	const [newPricePerDay, setNewPricePerDay] = useState(0);
-	const [selectedStatus, setSelectedStatus] = useState("");
-	const [selectedCategory, setSelectedCategory] = useState("");
+	const handleInputChange = (e) => {
+		const { name, value } = e.target;
+		setNewProduct((prevProduct) => ({
+			...prevProduct,
+			[name]: value,
+		}));
+	};
+
+	const handleImageUpload = (e) => {
+		const file = e.target.files[0];
+		setNewProduct((prevProduct) => ({
+			...prevProduct,
+			imgURL: file,
+		}));
+	};
 
 	const onSubmitProduct = async () => {
-		// Perform validation
+		const { name, imgURL, pricePerDay, status, category } = newProduct;
+
 		if (
-			newProductName.trim() === '' ||
-			newImgURL.trim() === '' ||
-			newPricePerDay <= 0 ||
-			selectedStatus === '' ||
-			selectedCategory === ''
+			name.trim() === '' ||
+			!imgURL ||
+			pricePerDay <= 0 ||
+			status === '' ||
+			category === ''
 		) {
 			setValidationError('Please fill out all fields correctly.');
 			return;
 		}
-
-		// Clear any previous validation errors
 		setValidationError(null);
 
 		try {
-			await addDoc(productsCollectionRef, {
-				ProductName: newProductName,
-				ImgURL: newImgURL,
-				PricePerDay: newPricePerDay,
+			const imageRef = ref(storage, `projectFiles/${imgURL.name}`);
+			const imageSnapshot = await uploadBytes(imageRef, imgURL);
+			const downloadURL = await getDownloadURL(imageSnapshot.ref);
+			const productData = {
+				ProductName: name,
+				PricePerDay: pricePerDay,
 				userId: auth?.currentUser?.uid,
-				StatusID: selectedStatus,
-				CategoryID: selectedCategory,
-			});
+				StatusID: status,
+				CategoryID: category,
+				ImgURL: downloadURL,
+			};
+
+			await addDoc(productsCollectionRef, productData);
+
 			navigate('/products');
 		} catch (err) {
 			console.error(err);
@@ -84,42 +110,59 @@ function CreateProduct() {
 
 	return (
 		<>
-			<div>
-				<input
-					placeholder="Product Name..."
-					onChange={(e) => setNewProductName(e.target.value)}
-				/>
-				<input
-					placeholder="Img URL..."
-					onChange={(e) => setNewImgURL(e.target.value)}
-				/>
-				<input
-					placeholder="Price per day..."
-					type="number"
-					onChange={(e) => setNewPricePerDay(Number(e.target.value))}
-				/>
+			<div className='CreateProductWrapper'>
+				<div className='Form'>
+					<img src={baby} className='baby' />
+					<h2 style={{
+						color: "#d0aef3", fontWeight: "700", paddingBottom: "20px"
+					}}>Create Product</h2>
+					<input
+						type="text"
+						name="name"
+						placeholder="Product Name..."
+						value={newProduct.name}
+						onChange={handleInputChange} className='createproductinput'
+					/>
+					<input type="file" onChange={handleImageUpload} className='createproductinput' />
+					<input
+						type="number"
+						name="pricePerDay"
+						placeholder="Price per day..."
+						value={newProduct.pricePerDay}
+						onChange={handleInputChange} className='createproductinput'
+					/>
 
-				<select onChange={(e) => setSelectedStatus(e.target.value)}>
-					<option value="">Select Status</option>
-					{statusList.map((status) => (
-						<option key={status.id} value={status.id}>
-							{status.StatusName}
-						</option>
-					))}
-				</select>
+					<select
+						name="status"
+						onChange={handleInputChange}
+						value={newProduct.status}
+					>
+						<option value="">Select Status</option>
+						{statusList.map((status) => (
+							<option key={status.id} value={status.id}>
+								{status.StatusName}
+							</option>
+						))}
+					</select>
 
-				<select onChange={(e) => setSelectedCategory(e.target.value)}>
-					<option value="">Select Category</option>
-					{categoriesList.map((category) => (
-						<option key={category.id} value={category.id}>
-							{category.CategoryName}
-						</option>
-					))}
-				</select>
+					<select
+						name="category"
+						onChange={handleInputChange}
+						value={newProduct.category}
+					>
+						<option value="">Select Category</option>
+						{categoriesList.map((category) => (
+							<option key={category.id} value={category.id} className='Optionstyle'>
+								{category.CategoryName}
+							</option>
+						))}
+					</select>
 
-				<button onClick={onSubmitProduct}>Submit Product</button>
+					<button onClick={onSubmitProduct} className='createbtn'>Post</button>
 
-				{validationError && <p style={{ color: 'red' }}>{validationError}</p>}
+					{validationError && <p style={{ color: "#B71C1C", fontWeight: "700", fontSize: "18px" }}>{validationError}</p>}
+
+				</div>
 			</div>
 		</>
 	);
