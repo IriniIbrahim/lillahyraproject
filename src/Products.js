@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { auth, db } from './config/firebase';
 import { getDocs, collection, query, where } from 'firebase/firestore';
 import './Products.css'; // Import your CSS file
@@ -39,12 +39,12 @@ function Products() {
 			from_name: auth?.currentUser?.email,
 			subject: `Inquiry about ${product.ProductName}`,
 			message: `I am interested in your product ${product.ProductName}. 
-		          Here are the details:
-		          - Product Name: ${product.ProductName}
-		          - Price per day: ${product.PricePerDay} Kr
-		          - Category: ${categoryMapping[product.CategoryID]}
-		          - Status: ${statusList.find((status) => status.id === product.StatusID)?.StatusName || 'Unknown'}
-		          Please provide me with more details.`,
+        Here are the details:
+        - Product Name: ${product.ProductName}
+        - Price per day: ${product.PricePerDay} Kr
+        - Category: ${categoryMapping[product.CategoryID]}
+        - Status: ${statusList.find((status) => status.id === product.StatusID)?.StatusName || 'Unknown'}
+        Please provide me with more details.`,
 		};
 		emailjs.send(
 			'service_k0kvpac',
@@ -62,8 +62,7 @@ function Products() {
 			});
 	};
 
-
-	const getProductsList = async () => {
+	const getProductsList = useCallback(async () => {
 		try {
 			const productData = await getDocs(productsCollectionRef);
 			const categoriesData = await getDocs(categoriesCollectionRef);
@@ -115,17 +114,18 @@ function Products() {
 		} catch (err) {
 			console.error('Error fetching data:', err);
 		}
-	};
+	}, [categoriesCollectionRef, productsCollectionRef, statusCollectionRef, usersCollectionRef]);
 
 	useEffect(() => {
 		getProductsList();
-	}, []);
+	}, [getProductsList, categoriesCollectionRef, productsCollectionRef, statusCollectionRef, usersCollectionRef]);
 
 	const handleCategoryChange = (categoryName) => {
 		setSelectedCategory(categoryName);
 	};
 
 	const handleSearch = () => {
+		// Handle your search logic here
 	};
 
 	return (
@@ -135,7 +135,7 @@ function Products() {
 					<div className="category-buttons">
 						<button
 							onClick={() => handleCategoryChange('')} className='category-button '>
-							<img src={AllProductsImage} alt="ALl products" style={{ width: "30px" }} />
+							<img src={AllProductsImage} alt="All products" style={{ width: "30px" }} />
 							All Categories
 						</button>
 						{categoriesList.map((category) => (
