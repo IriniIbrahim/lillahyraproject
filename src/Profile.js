@@ -52,7 +52,7 @@ function Profile() {
 					{user ? (
 						<>
 							<div>
-								<img src={leo} className="ProfilePic" />
+								<img src={leo} className="ProfilePic" alt="Leo" />
 							</div>
 							<div>
 								<h2 style={{

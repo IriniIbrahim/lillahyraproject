@@ -5,8 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import "./CreateProduct.css"
 import baby from "./assets/Sleeping baby-cuate.svg"
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
 function CreateProduct() {
 	const navigate = useNavigate();
 
@@ -112,7 +110,7 @@ function CreateProduct() {
 		<>
 			<div className='CreateProductWrapper'>
 				<div className='Form'>
-					<img src={baby} className='baby' />
+					<img src={baby} className='baby' alt="baby" />
 					<h2 style={{
 						color: "#d0aef3", fontWeight: "700", paddingBottom: "20px"
 					}}>Create Product</h2>
