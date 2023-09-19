@@ -4,7 +4,7 @@ import 'bootstrap/dist/js/bootstrap.min.js';
 import { Carousel } from "react-bootstrap";
 import Ornament from "../assets/Ornament.svg"
 import sara from "../assets/sara.svg"
-import emily from "../assets/emily.png"
+import emily from "../assets/Emily.svg"
 import leo from "../assets/Leo.svg"
 
 import "./Testmonials.css";

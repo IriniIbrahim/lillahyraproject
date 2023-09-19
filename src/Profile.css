@@ -1,0 +1,58 @@
+.ProfileWrapper {
+	background: #ffdcf4;
+	padding: 50px;
+	padding-left: 400px;
+	padding-right: 400px;
+	background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat.svg");
+}
+
+.ProfileBox {
+	border-radius: 2.5rem;
+	background: rgba(0, 0, 0, 0.388);
+	box-shadow: 0px 4px 4px 0px
+		rgba(0, 0, 0, 0.5);
+	padding: 50px;
+	display: flex;
+	flex-direction: column;
+	text-align: left;
+}
+.ProfileBoxWrap {
+	display: flex;
+	flex-direction: row;
+}
+
+.ProfileImg {
+	position: absolute;
+	height: 340px;
+	top: 143px;
+	right: 330px;
+}
+.ProfilePic {
+	width: 200px;
+	margin-right: 30px;
+}
+
+@media (max-width: 900px) {
+	.ProfileWrapper {
+		padding: 20px;
+		padding-left: 50px;
+		padding-right: 50px;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.ProfileBox {
+		padding-top: 50px;
+		padding-bottom: 50px;
+	}
+	.ProfileBoxWrap {
+		flex-direction: column;
+	}
+	.ProfileImg {
+		display: none;
+	}
+	.ProfilePic {
+		width: 100px;
+		margin-bottom: 20px;
+	}
+}
